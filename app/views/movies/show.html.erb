@@ -1,0 +1,89 @@
+<div class="panel panel-default">
+<div class="panel-body">
+<div class="row">
+<div class="col-md-4">
+
+  <%= image_tag(@movie.image, style:"width:250px; height:250px") if @movie.image.attached? %><br>
+<% if @movie.pictures.any? %>
+    Pictures:
+    <ul>
+      <% @movie.pictures.each do |picture| %>
+        <% picture.pictures.each do |p| %><br><br>
+          <%= image_tag(p, style:"width:250px; height:250px") %>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+<div class="table-responsive">
+<table class="table">
+<tbody>
+<tr>
+<td><strong>Title: </strong><%=  @movie.title %></td>
+</tr>
+<tr>
+<td><strong>Description: </strong><%=  @movie.description %></td>
+</tr>
+<tr>
+<td><strong>Movie_Length: </strong><%= @movie.movie_length %></td>
+</tr>
+<tr>
+<td><strong>Director: </strong><%=  @movie.director %></td>
+</tr>
+<tr>
+<td><strong>Rating: </strong><%=  @movie.rating %></td>
+</tr>
+<tr>
+<td><strong>Status: </strong><%= @movie.status %></td>
+</tr>
+<tr>
+<td><strong>Genre: </strong><%= @movie.genre %></td>
+</tr>
+</tbody>
+</table>
+<% if @movie.cast_members.any? %>
+  <strong>Cast Members:</strong>
+  <ul>
+    <% @movie.cast_members.each do |cast_member| %>
+      <li><strong>Name: </strong> <%= cast_member.name %></li>
+      <li><strong>Role: </strong><%= cast_member.role %></li> 
+    <% end %>
+  </ul>
+<% end %>
+<%= link_to "Write a review",  new_movie_review_path(@movie) %><br>
+</div>
+</div>
+<div class="col-md-7 col-md-offset-1">
+<h1 class="review-title"><%= @movie.title %></h1>
+<p> <%= @movie.description %> </p>
+<% if @reviews.blank? %>
+<h3> No Reviews yet...... </h3>
+<%= link_to "Add a Review", new_movie_review_path(@movie), class: "btn-btn-danger" %>
+<% else %>
+<% @reviews.each do |review| %>
+    <div class="reviews">
+    <p>Ratting: <%= review.rating %></p>
+    <div class="star-rating" data-score= <%= review.rating %> ></div>
+    <p>Comment: <%= review.comment %></p>
+    </div>
+    <% end %>
+<% end %>
+</div>
+</div>
+</div>
+</div>
+
+<%= link_to favourite_text, favourites_update_path(movie: @movie), id: "favourite_link", remote: true %><br><br>
+<%= link_to 'Edit', edit_movie_path(@movie) %><br><br>
+<%= button_to 'Delete', movie_path(@movie), method: :delete, data: {confirm: "Are you Sure"} %><br>
+<%= link_to 'Back To Movies', movies_path %>
+
+<script>
+    $('.star-rating').raty({
+      path: '/assets/',
+      readOnly: true,
+      score: function() {
+            return $(this).attr('data-score');
+    }
+  });
+</script>
+

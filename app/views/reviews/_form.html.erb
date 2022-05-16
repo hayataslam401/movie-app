@@ -1,0 +1,20 @@
+<%= form_for([@movie, @review]) do |form| %>
+    <div>
+      <%= form.label :rating %><br>
+      <%= form.text_field :rating %>
+    </div>
+  <div id="star-rating"></div>
+    <div>
+      <%= form.label :comment %><br>
+      <%= form.text_area :comment %>
+    </div><br>
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+  <script>
+  $('#star-rating').raty({
+    path: '/assets/',
+    scoreName: 'review[rating]'
+  });
+</script>

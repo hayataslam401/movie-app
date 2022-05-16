@@ -1,0 +1,11 @@
+<% if !user_signed_in? %>
+  <div class="jumbotron">
+    <h1>Your Favorite Movies Reviewed</h1>
+    <p><%= link_to "Sign in To Write A Review", new_user_session_path, class: "btn btn-primary btn-lg" %></p>
+  </div>
+<% end %>
+<div>
+
+<%= render "movies/movie" %>
+ </div>  <br> 
+<%= link_to 'Add New Movie', new_movie_path %>

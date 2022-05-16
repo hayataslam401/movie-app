@@ -1,0 +1,5 @@
+<strong>Rating: <%= @review.rating %> </strong><br><br>
+<strong>Comment: <%= @review.comment %> </strong><br><br>
+<strong>User: <%= @review.user.email %> </strong><br><br>
+<%= link_to 'Edit', edit_review_path(@review) %><br>
+<%= button_to 'Delete', review_path(@review), method: :delete, data: {confirm: "Are you Sure"} %>

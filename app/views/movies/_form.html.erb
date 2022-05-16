@@ -1,0 +1,62 @@
+<%= form_with model: movie do |f| %>
+  <ul>
+    <% movie.errors.full_messages.each do |error| %>
+      <li><%= error %></li>
+    <%end%>
+  </ul>
+    <div>
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </div>
+    <div>
+      <%= f.label :description %><br>
+      <%= f.text_area :description %>
+    </div>
+  
+    <div>
+    <%= f.label :movie_length %><br>
+    <%= f.text_field :movie_length %>
+  </div>
+  
+  <div>
+  <%= f.label :director %><br>
+  <%= f.text_field :director %>
+  </div>
+  
+  <div>
+  <%= f.label :rating %><br>
+  <%= f.text_field :rating %>
+  </div><br>
+
+  <%= f.label :status %>
+  <%= f.select :status, Movie.statuses.keys.to_a %><br>
+<% if current_user.role == "Admin" %>
+  <%= f.label :genre %>
+  <%= f.select :genre, Movie.genres.keys.to_a %>
+<% end %>
+  <div class="field">
+  <%= f.fields_for :cast_members do |cast_member| %>
+    <%= render 'cast_member_fields', f:cast_member %>
+  <%end%>
+  <div class="links">
+  <%= link_to_add_association 'Add castmembers ', f, :cast_members %>
+</div>
+ </div>
+
+
+  <div>
+  <%= f.label :image %><br>
+  <%= f.file_field :image %>
+  </div><br>
+  <div>
+  <%= f.fields_for :pictures do |picture| %>
+    <%= picture.label :pictures, style: "display: block" %>
+    <%= picture.file_field :pictures, multiple: true %>
+
+  <% end %>
+</div>
+    <div>
+      <%= f.submit %>
+    </div>
+  <% end %>
+

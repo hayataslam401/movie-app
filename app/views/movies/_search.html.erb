@@ -1,0 +1,8 @@
+<% @movies.each do |m| %>
+    <%= image_tag(m.image, style:"width:150px; height:150px") if m.image.attached? %><br>
+    <strong>Title: </strong><%= m.title %><br>
+    <strong>Description: </strong><%=  m.description %><br>
+    <strong>Rating: </strong><%=  m.rating %><br>
+    <strong>Director: </strong><%=  m.director %><br>
+    <strong>Movie Length: </strong><%=  m.movie_length %><br>
+  <% end %>
