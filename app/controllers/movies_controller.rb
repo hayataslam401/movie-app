@@ -5,6 +5,7 @@ class MoviesController < ApplicationController
     if current_user.present?
      @movies = policy_scope(Movie)
     end
+    
   end
   def search 
     @movies = Movie.where("title LIKE?","%"+params[:q]+"%")
