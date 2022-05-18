@@ -3,9 +3,12 @@ class MoviesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :edit]
   def index
     if current_user.present?
-     @movies = policy_scope(Movie)
+     #@movies = policy_scope(Movie)
+    #  Movie.eager_load(:reviews).with_positive_reviews
+     @movies = Movie.with_positive_reviews
+    #  @movies = Movie.review_present
     end
-    
+
   end
   def search 
     @movies = Movie.where("title LIKE?","%"+params[:q]+"%")
@@ -18,7 +21,7 @@ class MoviesController < ApplicationController
     authorize @movie
   end
   def create
-    authorize @movie
+    
     @movie = current_user.movies.build(movie_params)
     if @movie.save
       redirect_to movie_path(@movie)
