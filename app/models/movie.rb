@@ -12,4 +12,6 @@ class Movie < ApplicationRecord
     enum :genre, [ :Draft, :Published, :Rejected ]
     #scope :with_positive_reviews, -> { where(id: Review.pluck(:movie_id)) }
     scope :with_positive_reviews, -> { Movie.eager_load(:reviews).where.not("reviews.movie_id" => nil) }
+    scope :movie_search , -> (title2) { where("title LIKE?","%#{title2}%") }
+    acts_as_list
 end

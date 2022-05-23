@@ -1,11 +1,12 @@
-<div class="row">
 <% if user_signed_in? %>
+<%= link_to "Movies with Reviews", reviews_path %><br>
 <% @movies.each do |movie| %>
-<div class="col-sm-6 col-md-3" style="margin-top: 10px;">
+<div  class="col-sm-6 col-md-3" style="margin-top: 10px;">
  <%= link_to image_tag(movie.image, style:"width:150px; height:150px"), movie if movie.image.attached?%>
  </div> 
  <% end %>
   <% end %>
+ 
 </div>
 <%# Movie.all.where(genre: "Published")where(Movie.reviews.count > 0) %>
 
