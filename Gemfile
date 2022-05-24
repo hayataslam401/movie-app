@@ -30,6 +30,9 @@ gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'paperclip', '~> 6.1'
 gem 'cocoon', '~> 1.2', '>= 1.2.15'
 gem 'pundit'
+gem 'jquery-ui-rails', '~> 6.0', '>= 6.0.1'
+gem 'acts_as_list', '~> 1.0', '>= 1.0.4'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

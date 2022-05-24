@@ -1,13 +1,23 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:edit, :update, :show, :destroy]
+  before_action :set_movie, only: [:edit, :update, :show, :destroy, :move]
   before_action :authenticate_user!, except: [:index, :show, :edit]
   def index
     if current_user.present?
      @movies = policy_scope(Movie)
+    #  Movie.eager_load(:reviews).with_positive_reviews
+     #@movies = Movie.with_positive_reviews
+    #  @movies = Movie.review_present
+    end
+
+  end
+  def review
+    if current_user.present?
+     @movies = Movie.with_positive_reviews
     end
   end
   def search 
-    @movies = Movie.where("title LIKE?","%"+params[:q]+"%")
+    @movies = Movie.movie_search(params[:q])
+    #Movie.where("title LIKE?","%"+params[:q]+"%")
   end
   def new
     
@@ -17,7 +27,7 @@ class MoviesController < ApplicationController
     authorize @movie
   end
   def create
-    authorize @movie
+    
     @movie = current_user.movies.build(movie_params)
     if @movie.save
       redirect_to movie_path(@movie)
@@ -55,6 +65,11 @@ end
     @movie.destroy
     redirect_to root_path
   end
+  def move
+    #byebug
+    @movie.insert_at(params[:position].to_i)
+    head :ok
+  end
 
 
   private
@@ -62,6 +77,6 @@ end
     @movie = Movie.find(params[:id])
   end
   def movie_params
-    params.require(:movie).permit(:title, :description, :movie_length, :director, :rating, :image, :status,:genre, cast_members_attributes: [:id,:name, :role, :_destroy], pictures_attributes: [ :id, pictures:[] ] )
+    params.require(:movie).permit(:title, :position, :description, :movie_length, :director, :rating, :image, :status,:genre, cast_members_attributes: [:id,:name, :role, :_destroy], pictures_attributes: [ :id, pictures:[] ] )
   end
 end

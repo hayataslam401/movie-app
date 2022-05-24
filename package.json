@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@rails/ujs": "^6.0.5",
+    "sortablejs": "^1.15.0"
+  }
+}
